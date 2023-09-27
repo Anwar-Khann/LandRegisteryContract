@@ -1,78 +1,222 @@
- # Land Registry Smart Contract
+# LandRegistry Smart Contract Documentation
 
-## Description:
-The Land Registry Smart Contract is a decentralized application (Dapp) built on the Ethereum blockchain that allows landowners, sellers, buyers, and land inspectors to transact in a secure and transparent manner. This smart contract has the following features:
+## Overview
 
-It allows the registration of land with unique IDs and stores the owner's address, land details (area, city, state), land price, and property ID in a struct called landregistry.
-It allows the registration of sellers with unique IDs and stores their details (ID, name, age, city, CNIC, and email) in a struct called SellerDetails.
-It allows the registration of buyers with unique IDs and stores their details (name, age, city, CNIC, and email) in a struct called BuyerDetails.
-It allows the registration of land inspectors with unique IDs and stores their details (address, name, age, and designation) in a struct called 
-# Structs:
+The LandRegistry smart contract provides a decentralized system for registering and managing land ownership. It allows users to register land properties, sellers, buyers, and land inspectors. It also provides verification mechanisms for sellers and buyers.
 
-## LandInspector.
+## Contract Details
 
-It provides functions to verify and reject sellers, buyers, and land ownership.
-It allows the updating of seller details.
-It provides a function to get the landowner's address by land ID.
+- **Contract Name:** LandRegistry
+- **SPDX-License-Identifier:** GPL-3.0
+- **Solidity Version:** 0.8.7
 
-## landregistry: 
+## Structures
 
-Stores the owner's address, land details (area, city, state), land price, and property ID.
-SellerDetails: Stores the seller's ID, name, age, city, CNIC, and email.
-## BuyerDetails:
-Stores the buyer's name, age, city, CNIC, and email.
-## LandInspector:
-Stores the land inspector's address, name, age, and designation.
-Modifiers:
+### Land Registry
 
-# Modifiers
+- `struct LandRegistry`
+  - `Owner`: Address of the landowner.
+  - `Area`: Area of the land.
+  - `City`: City where the land is located.
+  - `State`: State where the land is located.
+  - `LandPrice`: Price of the land.
+  - `PropertyId`: Unique identifier for the land property.
 
-## LimitedRights: 
+### Buyer Details
 
-It is a modifier that restricts access to certain functions to only the land inspector.
-Functions:
+- `struct BuyerDetails`
+  - `Name`: Name of the buyer.
+  - `Age`: Age of the buyer.
+  - `City`: City of residence of the buyer.
+  - `Cnic`: National identification number of the buyer.
+  - `Email`: Email address of the buyer.
 
-# Functions
+### Seller Details
 
-## constructor():
- Initializes the smart contract and sets the address of the land inspector as the owner.
-## registerSeller(): 
- Allows the registration of sellers and stores their details in the struct SellerDetails.
-## VerifiySeller(): 
-Allows the land inspector to verify a seller by setting the value of VerifiedSeller to true.
-## RejectSeller(): 
-Allows the land inspector to reject a seller by setting the value of VerifiedSeller to false.
-## registerLand():
- Allows the registration of land and stores the land details in the struct landregistry.
-## VerifyingLand(): 
-Allows the land inspector to verify the land ownership by setting the value of VerifyLand to true.
-## RejectLand(): 
-Allows the land inspector to reject the land ownership by setting the value of VerifyLand to false.
-## updateSeller(): 
-Allows the seller to update their details.
-## getLandOwnerById():
- Allows anyone to get the landowner's address by land ID.
-RegisterBuyer(): Allows the registration of buyers and stores their details in the struct BuyerDetails.
-## BuyerVerified(): 
-Allows the land inspector to verify a buyer by setting the value of VerifiedBuyer to true.
-## BuyerReject(): 
-Allows the land inspector to reject a buyer by setting the value of VerifiedBuyer to false.
-## Landinspector(): 
-Allows the registration of land inspectors and stores their details in the struct LandInspector.
+- `struct SellerDetails`
+  - `id`: Unique identifier for the seller.
+  - `Name`: Name of the seller.
+  - `Age`: Age of the seller.
+  - `City`: City of residence of the seller.
+  - `Cnic`: National identification number of the seller.
+  - `Email`: Email address of the seller.
 
-# Mappings:
+### Land Inspector
 
-## land: 
-Stores the land details with unique IDs.
-## seller: 
-Stores the seller details with unique addresses.
-## buyer: 
-Stores the buyer details with unique addresses.
-## landInspector: 
-Stores the land inspector details with unique addresses.
-## VerifiedSeller: 
-Stores the verification status of sellers with unique addresses.
-## VerifiedBuyer: 
-Stores the verification status of buyers with unique addresses.
-## VerifyLand: 
-Stores the verification status of land with unique IDs.
+- `struct LandInspector`
+  - `id`: Address of the land inspector.
+  - `name`: Name of the land inspector.
+  - `age`: Age of the land inspector.
+  - `designation`: Designation of the land inspector.
+
+## Constructor
+
+### `constructor()`
+
+- **Description:** Initializes the contract, setting the contract deployer as the land inspector.
+
+## Modifiers
+
+### `modifier LimitedRights`
+
+- **Description:** Ensures that only the land inspector can execute the function.
+
+## Functions
+
+### `Landinspector(address _addr, string memory _name, uint _age, string memory _designation)`
+
+- **Description:** Adds a new land inspector.
+- **Parameters:**
+  - `_addr`: Address of the land inspector.
+  - `_name`: Name of the land inspector.
+  - `_age`: Age of the land inspector.
+  - `_designation`: Designation of the land inspector.
+
+### `registerSeller(uint _id, string memory _Name, uint _Age, string memory _City, uint _Cnic, string memory _Email)`
+
+- **Description:** Registers a seller.
+- **Parameters:**
+  - `_id`: Unique identifier for the seller.
+  - `_Name`: Name of the seller.
+  - `_Age`: Age of the seller.
+  - `_City`: City of residence of the seller.
+  - `_Cnic`: National identification number of the seller.
+  - `_Email`: Email address of the seller.
+
+### `VerifiySeller(address _addr)`
+
+- **Description:** Verifies a seller.
+- **Parameters:**
+  - `_addr`: Address of the seller.
+
+### `RejectSeller(address _addr)`
+
+- **Description:** Rejects a seller.
+- **Parameters:**
+  - `_addr`: Address of the seller.
+
+### `registerLand(uint _LandId, address, string memory _Area, string memory _City, string memory _State, uint _LandPrice, uint _PropertyId)`
+
+- **Description:** Registers a land property.
+- **Parameters:**
+  - `_LandId`: Unique identifier for the land property.
+  - `_Area`: Area of the land.
+  - `_City`: City where the land is located.
+  - `_State`: State where the land is located.
+  - `_LandPrice`: Price of the land.
+  - `_PropertyId`: Unique identifier for the land property.
+
+### `VerifyingLand(uint _LandId)`
+
+- **Description:** Verifies a land property.
+- **Parameters:**
+  - `_LandId`: Unique identifier for the land property.
+
+### `RejectLand(uint _LandId)`
+
+- **Description:** Rejects a land property.
+- **Parameters:**
+  - `_LandId`: Unique identifier for the land property.
+
+### `updateSeller(address _addr, string memory _Name, uint _Age, string memory _City, uint _Cnic, string memory _Email)`
+
+- **Description:** Updates seller information.
+- **Parameters:**
+  - `_addr`: Address of the seller.
+  - `_Name`: Name of the seller.
+  - `_Age`: Age of the seller.
+  - `_City`: City of residence of the seller.
+  - `_Cnic`: National identification number of the seller.
+  - `_Email`: Email address of the seller.
+
+### `getLandOwnerById(uint _id)`
+
+- **Description:** Retrieves the owner of a land property by its unique identifier.
+- **Parameters:**
+  - `_id`: Unique identifier for the land property.
+- **Returns:** Address of the landowner.
+
+### `RegisterBuyer(address _key, string memory _Name, uint _Age, string memory _City, uint _Cnic, string memory _Email)`
+
+- **Description:** Registers a buyer.
+- **Parameters:**
+  - `_key`: Address of the buyer.
+  - `_Name`: Name of the buyer.
+  - `_Age`: Age of the buyer.
+  - `_City`: City of residence of the buyer.
+  - `_Cnic`: National identification number of the buyer.
+  - `_Email`: Email address of the buyer.
+
+### `BuyerVerified(address _addr)`
+
+- **Description:** Verifies a buyer.
+- **Parameters:**
+  - `_addr`: Address of the buyer.
+
+### `BuyerReject(address _addr)`
+
+- **Description:** Rejects a buyer.
+- **Parameters:**
+  - `_addr`: Address of the buyer.
+
+### `UpdateBuyer(address _addr, string memory _Name, uint _Age, string memory _City, uint _Cnic, string memory _Email)`
+
+- **Description:** Updates buyer information.
+- **Parameters:**
+  - `_addr`: Address of the buyer.
+  - `_Name`: Name of the buyer.
+  - `_Age`: Age of the buyer.
+  - `_City`: City of residence of the buyer.
+  - `_Cnic`: National identification number of the buyer.
+  - `_Email`: Email address of the buyer.
+
+### `GetCurrentOwner(uint _LandId)`
+
+- **Description:** Retrieves the current owner of a land property by its unique identifier.
+- **Parameters:**
+  - `_LandId`: Unique identifier for the land property.
+- **Returns:** Address of the current landowner.
+
+### `GetLandCity(uint _LandId)`
+
+- **Description:** Retrieves the city where a land property is located.
+- **Parameters:**
+  - `_LandId`: Unique identifier for the land property.
+- **Returns:** City of the land.
+
+### `GetLandPrice(uint _LandId)`
+
+- **Description:** Retrieves the price of a land property.
+- **Parameters:**
+  - `_LandId`: Unique identifier for the land property.
+- **Returns:** Price of the land.
+
+### `GetLandArea(uint _LandId)`
+
+- **Description:** Retrieves the area of a land property.
+- **Parameters:**
+  - `_LandId`: Unique identifier for the land property.
+- **Returns:** Area of the land.
+
+### `BuyLand(uint _LandId)`
+
+- **Description:** Allows a buyer to purchase a land property.
+- **Parameters:**
+  - `_LandId`: Unique identifier for the land property.
+- **Requires:**
+  - Buyer must be verified.
+  - Land property must be verified.
+- **Effects:**
+  - Transfers ownership of the land property to the buyer.
+  - Transfers the payment to the seller.
+
+## Usage
+
+This smart contract provides a decentralized land registry system with features for registering land, buyers, sellers, and land inspectors. It also includes verification mechanisms for buyers and sellers, allowing for secure land transactions.
+
+## Contributors
+
+- [Your Name]
+- [Your Email]
+
+For questions or issues, please contact [Your Email].
